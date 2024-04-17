@@ -24,7 +24,6 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
-              subPath: postgres
           resources:
             limits:
               memory: "128Mi"
@@ -34,6 +33,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: pgpassword
-                  key: POSTGRES_PASSWORD    
-
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_USERNAME
+              value: postgres
+            - name: POSTGRES_DB
+              value: simple_blog_api
 # TODO: Add Environment Variables

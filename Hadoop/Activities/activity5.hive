@@ -1,0 +1,31 @@
+-- Create employee data table
+CREATE TABLE employee (id INT, name STRING,dept STRING,yoj INT,salary INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+TBLPROPERTIES ("skip.header.line.count"="1");
+
+-- To see the structure of the table
+DESCRIBE employee;
+
+-- Load data into the employee table from a local file
+LOAD DATA LOCAL INPATH '/root/EmpData.csv' INTO TABLE employee;
+
+-- To see the data that has been loaded into the employee table
+SELECT * FROM employee;
+
+-- To count the number of rows in the table
+SELECT COUNT(*) FROM employee;
+
+-- Run the below queries
+SELECT  id, name FROM employee;
+SELECT * FROM employee WHERE salary > 30000;
+SELECT count(*) FROM employee;
+
+-- Results exported to HDFS directory
+INSERT OVERWRITE DIRECTORY '/user/sreeg/HiveOutput'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM employee;
+
+-- Results exported to local filesystem
+INSERT OVERWRITE LOCAL DIRECTORY '/root/HiveOutput'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT COUNT(*) FROM employee;

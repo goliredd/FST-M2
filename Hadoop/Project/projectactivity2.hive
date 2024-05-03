@@ -1,0 +1,12 @@
+-- Create a table episode4
+CREATE TABLE episode4 (Name string, Dialogue string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+
+-- Load the data into the table
+LOAD DATA LOCAL INPATH '/root/inputs/episodeIV_dialogues.txt' INTO TABLE episode4;
+
+-- Print results to local filesystem
+INSERT OVERWRITE LOCAL DIRECTORY '/root/HiveProjectOutput2'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+SELECT COUNT(*) FROM episode4 WHERE Dialogue LIKE '%Luke%';
+-- SELECT COUNT(*) FROM episode4 WHERE INSTR(line, 'Luke')>0;

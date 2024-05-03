@@ -1,0 +1,13 @@
+-- Create a table episode
+CREATE TABLE episodes (Name string, Dialogue string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+
+-- Load the data into the table
+LOAD DATA LOCAL INPATH '/root/inputs/episodeIV_dialogues.txt' INTO TABLE episodes;
+LOAD DATA LOCAL INPATH '/root/inputs/episodeV_dialogues.txt' INTO TABLE episodes;
+LOAD DATA LOCAL INPATH '/root/inputs/episodeVI_dialogues.txt' INTO TABLE episodes;
+
+-- Print results to local filesystem
+INSERT OVERWRITE LOCAL DIRECTORY '/root/HiveProjectOutput1'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+SELECT Name, COUNT(Dialogue) AS noOfLines FROM episodes GROUP BY Name ORDER BY noOfLines DESC;

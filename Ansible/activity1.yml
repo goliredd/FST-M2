@@ -1,9 +1,14 @@
 ---
-- hosts: all
-  become: yes
+- name: Create a group and add a user
+  hosts: local
+  become: true
   tasks:
-    - name: Create User
+    - name: Selecting existing group
+      group:
+        name: Wheel
+        state: present
+    - name: Adding user to the group
       user:
         name: testuser
-        groups: wheel
-        append: true
+        groups: Wheel
+        append: yes
